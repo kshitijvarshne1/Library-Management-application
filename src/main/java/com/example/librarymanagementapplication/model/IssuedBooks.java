@@ -25,6 +25,5 @@ public class IssuedBooks {
     private int userId;
     private int bookId;
     private String status;
-
 }
 
