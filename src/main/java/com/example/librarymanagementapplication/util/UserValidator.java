@@ -7,6 +7,15 @@
 
 package com.example.librarymanagementapplication.util;
 
+import com.example.librarymanagementapplication.model.User;
+
 public class UserValidator {
+    public static boolean isValidUser(User user) {
+        if (user.getEmail() == null || user.getEmail() == "") {
+            return false;
+        }
+        return true;
+    }
+
 }
 
