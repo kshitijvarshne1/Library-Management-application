@@ -7,6 +7,10 @@
 
 package com.example.librarymanagementapplication.exception;
 
-public class UserNotFoundException {
+public class UserNotFoundException extends RuntimeException{
+    public UserNotFoundException(int id) {
+        super("User id not found : " + id);
+    }
+
 }
 
