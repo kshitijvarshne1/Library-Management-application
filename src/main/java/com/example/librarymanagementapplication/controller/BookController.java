@@ -7,9 +7,44 @@
 
 package com.example.librarymanagementapplication.controller;
 
+import com.example.librarymanagementapplication.exception.BookNotFoundException;
+import com.example.librarymanagementapplication.model.Book;
+import com.example.librarymanagementapplication.repository.BookRepository;
+import com.example.librarymanagementapplication.repository.UserRepository;
+import com.example.librarymanagementapplication.util.BookValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class BookController {
+    @Autowired
+    BookRepository bookRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    BookValidator bookValidator = new BookValidator();
+
+    @GetMapping("/books")
+    List<Book> findAll() {
+        List<Book> list = new ArrayList<>();
+        try {
+            list = bookRepository.findAll();
+            if (list.size() == 0) {
+                throw new BookNotFoundException();
+            }
+        }
+        catch(BookNotFoundException exc)
+        {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No Book Found", exc);
+        }
+        return list;
+    }
 }
 
