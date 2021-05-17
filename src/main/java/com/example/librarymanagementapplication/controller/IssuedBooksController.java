@@ -10,8 +10,8 @@ package com.example.librarymanagementapplication.controller;
 import com.example.librarymanagementapplication.model.IssuedBooks;
 import com.example.librarymanagementapplication.repository.IssuedBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +23,17 @@ public class IssuedBooksController {
     @GetMapping("/issuedBooks")
     public List<IssuedBooks> findAllIssuedBooks(){
         return issuedBooksRepository.findAll();
+    }
+
+    @PostMapping(value = "/issueBook")
+    @ResponseStatus(HttpStatus.CREATED)
+    public IssuedBooks issueBook(@RequestBody IssuedBooks issuedBooks) throws Exception{
+        try {
+            return issuedBooksRepository.save(issuedBooks);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new Exception();
+        }
     }
 }
 
