@@ -14,8 +14,7 @@ import com.example.librarymanagementapplication.repository.UserRepository;
 import com.example.librarymanagementapplication.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -45,6 +44,17 @@ public class BookController {
                     HttpStatus.NOT_FOUND, "No Book Found", exc);
         }
         return list;
+    }
+
+    @PostMapping("/books")
+    @ResponseStatus(HttpStatus.CREATED)
+    Book newBook(@RequestBody Book newBook) {
+
+        if (bookValidator.isValid(newBook))
+            return bookRepository.save(newBook);
+        else {
+            return null;
+        }
     }
 }
 
