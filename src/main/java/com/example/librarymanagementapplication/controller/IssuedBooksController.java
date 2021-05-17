@@ -40,7 +40,7 @@ public class IssuedBooksController {
     @GetMapping(value = "/searchIssuedBooksByUser")
     public List<IssuedBooks> searchIssuedBooksByUser(@RequestParam(value = "q") String userId){
         List<IssuedBooks> books = issuedBooksRepository.findAll();
-        ArrayList<IssuedBooks> list = new ArrayList<IssuedBooks>();
+        ArrayList<IssuedBooks> list = new ArrayList<>();
         for(IssuedBooks book : books){
             int id = Integer.parseInt(userId);
             if(book.getUserId()==id){
@@ -49,5 +49,6 @@ public class IssuedBooksController {
         }
         return list;
     }
+
 }
 
