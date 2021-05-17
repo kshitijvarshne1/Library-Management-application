@@ -49,12 +49,21 @@ public class BookController {
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.CREATED)
     Book newBook(@RequestBody Book newBook) {
-
         if (bookValidator.isValid(newBook))
             return bookRepository.save(newBook);
         else {
             return null;
         }
+    }
+
+    @GetMapping(value = "/searchBooksByAuthor")
+    public List<Book> searchBooksByAuthor(@RequestParam(value = "q") String author){
+        List<Book> books = bookRepository.findAll();
+        ArrayList<Book> list = new ArrayList<Book>();
+        for(Book book : books){
+            if(book.getAuthor().equals(author)) list.add(book);
+        }
+        return list;
     }
 }
 
