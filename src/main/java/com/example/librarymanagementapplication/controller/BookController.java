@@ -65,5 +65,15 @@ public class BookController {
         }
         return list;
     }
+
+    @GetMapping(value = "/searchBooksBySubject")
+    public List<Book> searchBooksBySubject(@RequestParam(value = "q") String subject){
+        List<Book> books = bookRepository.findAll();
+        ArrayList<Book> list = new ArrayList<Book>();
+        for(Book book : books){
+            if(book.getSubject().equals(subject)) list.add(book);
+        }
+        return list;
+    }
 }
 
